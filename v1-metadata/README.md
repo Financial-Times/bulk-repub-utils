@@ -8,6 +8,11 @@ Republishing the V1 metadata means taking the V1 metadata stored in the native s
 3. `export MESSAGES_PER_SECOND=20`
 4. ` docker run coco/up-restutil /up-restutil dump-resources --throttle=$MESSAGES_PER_SECOND http://$HOSTNAME:8080/__nativerw/v1-metadata/ |  docker run -i coco/up-restutil /up-restutil put-resources uuid http://$HOSTNAME:$SENDER_PORT/message`
 
+### Do a cross-cluster republish
+Points 1,2,3 are the same as above, done on the destination cluster.
+The throttling is approximate with this method, you get `$MESSAGES_PER_SECOND` messages, then a 1 second (configurable) pause
+4. `./readData.sh $MESSAGES_PER_SECOND 1 sourceCluster user:pw nativerw v1-metadata | docker run -i coco/up-restutil /up-restutil put-resources uuid http://$HOSTNAME:$SENDER_PORT/message`
+
 ### See 
 
 * [up-restutil](https://github.com/Financial-Times/up-restutil)
